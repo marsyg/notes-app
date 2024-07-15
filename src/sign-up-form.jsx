@@ -1,4 +1,29 @@
+import axios from "axios";
+import { useState } from "react";
 const SignUp = () => {
+  const [email, setEmail] = useState("");
+
+  const [pass, setPass] = useState("");
+ 
+  const handleEmailChange = (e) => {
+		setEmail(e.target.value);
+	};
+
+	const handlePasswordChange = async(e) => {
+    setPass(e.target.value);
+    try {
+      const response = await axios.post(`http://localhost:3000/sign-up`, {
+				emailAddress: email,
+				password: pass,
+			});
+      console.log(response)
+    }
+    catch(error) {
+      console.log("this is " +error)
+    }
+  };
+  const handleSubmit = (e) => e.preventDefault();
+ 
   return (
 		<>
 			<div className="flex min-h-full flex-col justify-center w-screen items-center self-center border-separate px-8    py-12 lg:px-8">
@@ -23,13 +48,14 @@ const SignUp = () => {
 								Email address
 							</label>
 							<div className="mt-2">
-								<input
+                <input
+                  onChange={handleEmailChange}
 									id="email"
 									name="email"
 									type="email"
 									autoComplete="email"
 									required
-									className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+									className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
 								/>
 							</div>
 						</div>
@@ -52,7 +78,8 @@ const SignUp = () => {
 								</div>
 							</div>
 							<div className="mt-2">
-								<input
+                <input
+                  onChange={handlePasswordChange}
 									id="password"
 									name="password"
 									type="password"
@@ -64,7 +91,8 @@ const SignUp = () => {
 						</div>
 
 						<div>
-							<button
+              <button
+                onSubmit={handleSubmit}
 								type="submit"
 								className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 							>
