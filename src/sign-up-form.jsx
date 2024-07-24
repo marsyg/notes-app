@@ -9,20 +9,29 @@ const SignUp = () => {
 		setEmail(e.target.value);
 	};
 
-	const handlePasswordChange = async(e) => {
+	const handlePasswordChange = (e) => {
     setPass(e.target.value);
-    try {
-      const response = await axios.post(`http://localhost:3000/sign-up`, {
-				emailAddress: email,
-				password: pass,
-			});
+  
+  };
+	const handleSubmit = async(e) => {
+	e.preventDefault();
+  try {
+      const response = await axios.post(
+				`http://localhost:3000/sign-up`,
+				{
+					emailAddress: email,
+					password: pass,
+				},
+				{
+					withCredentials: true, 
+				}
+			);
       console.log(response)
     }
     catch(error) {
       console.log("this is " +error)
     }
-  };
-  const handleSubmit = (e) => e.preventDefault();
+	} 
  
   return (
 		<>
@@ -39,7 +48,12 @@ const SignUp = () => {
 				</div>
 
 				<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-					<form className="space-y-6" action="#" method="POST">
+					<form
+						className="space-y-6"
+						action="#"
+						method="POST"
+						onSubmit={handleSubmit}
+					>
 						<div>
 							<label
 								htmlFor="email"
@@ -48,14 +62,14 @@ const SignUp = () => {
 								Email address
 							</label>
 							<div className="mt-2">
-                <input
-                  onChange={handleEmailChange}
+								<input
+									onChange={handleEmailChange}
 									id="email"
 									name="email"
 									type="email"
 									autoComplete="email"
 									required
-									className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+									className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 								/>
 							</div>
 						</div>
@@ -78,8 +92,8 @@ const SignUp = () => {
 								</div>
 							</div>
 							<div className="mt-2">
-                <input
-                  onChange={handlePasswordChange}
+								<input
+									onChange={handlePasswordChange}
 									id="password"
 									name="password"
 									type="password"
@@ -91,8 +105,7 @@ const SignUp = () => {
 						</div>
 
 						<div>
-              <button
-                onSubmit={handleSubmit}
+							<button
 								type="submit"
 								className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 							>
@@ -112,7 +125,6 @@ const SignUp = () => {
 					</p>
 				</div>
 			</div>
-		
 		</>
 	);
 } 

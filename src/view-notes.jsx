@@ -25,9 +25,7 @@ const ViewNotes = ({ data, setChange, change }) => {
 						content: contentText,
 					},
 				);
-				setChange((prev) => {
-					!prev;
-				});
+				setChange(prev=>!prev)
 				console.log("request sent from edit ");
 			} catch (error) {
 				console.log("error from edit:", error);
